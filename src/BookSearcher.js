@@ -25,11 +25,25 @@ class BookSearcher extends Component {
     this.setState({books: [], query: ''})
   }
 
+  setBookToSameBookOnShelf = (b) => {
+    this.props.booksOnShelf.forEach(bookOnShelf => {
+      b.id === bookOnShelf.id && (
+        b.shelf = bookOnShelf.shelf
+      )
+    })
+  }
+
   // * Returns a Promise which resolves to a JSON object containing a collection of a maximum of 20 book objects.
   // * These books do not know which shelf they are on. They are raw results only. You'll need to make sure that books have the correct state while on the search page.
   filterBooks = (value) => {
     BooksAPI.search(value, 20).then((books) => {
       if (books.length > 0) {
+        //map over books and set shelf to none, match remaining to books already on shelf
+        books.map(book => {
+          book.shelf = 'none',
+          this.setBookToSameBookOnShelf(book);
+        })
+
         this.setState(() => {
           return {
             books: books
@@ -54,10 +68,11 @@ class BookSearcher extends Component {
   }
 
   displayBooksGrid = () => {
+    console.log("propssssss", this.state.books);
     return (
      <ol className="books-grid">
       {this.state.query.length > 0 && this.state.books.map((book, index) =>
-        (<Book book={ book } key={ index } onUpdate={(shelf) => {
+        (<Book book={ book } key={ index } value={ book.shelf } onUpdate={(shelf) => {
         this.addBook(book, shelf)
       }}/>))}
     </ol>

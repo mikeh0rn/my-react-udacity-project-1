@@ -32,7 +32,7 @@ class BookSearcher extends Component {
       if (books.length > 0) {
         this.setState(() => {
           return {
-            books: books.filter((book) => (book.imageLinks))
+            books: books
           }
         })
       }

@@ -21,13 +21,14 @@ class Book extends Component {
 
   render() {
     const book = this.props.book
+    const fallBackImg = 'https://archive.is/a2wIH/0e444750039408c9dfcfc627163e1c9704878823.jpg'
     return (
       <li>
         <div className="book">
           <div className="book-top">
             <div className="book-cover" style={{
               width: 128, height: 193,
-              backgroundImage: `url("${book.imageLinks.thumbnail}")`
+              backgroundImage: `url("${book.imageLinks === undefined ? fallBackImg : book.imageLinks.thumbnail}")`
             }}></div>
             <div className="book-shelf-changer">
               {this.dropdownMenu(book)}

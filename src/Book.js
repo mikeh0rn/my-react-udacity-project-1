@@ -9,7 +9,7 @@ class Book extends Component {
 
   dropdownMenu = (book) => {
     return (
-      <select onChange={ this.moveToBookshelf } value={ book.shelf }>
+      <select onChange={ this.moveToBookshelf } value={ book.shelf === undefined ? 'none' : book.shelf }>
         <option value="move" disabled>Move to...</option>
         <option value="currentlyReading">Currently Reading</option>
         <option value="wantToRead">Want to Read</option>
